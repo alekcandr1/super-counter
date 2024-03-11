@@ -1,0 +1,38 @@
+.settings {
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    height: fit-content;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    margin: 20px auto;
+    background-color: #e7e7e7;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #2f2f2f;
+}
+
+.fields {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+}
+.fields > div {
+    display: flex;
+}
+.fields > div:first-child {
+    /*margin-right: 40px;*/
+    margin-bottom: 5px;
+}
+input {
+    width: 40px;
+    height: 17px;
+    margin: 0 10px;
+    text-align: center;
+}

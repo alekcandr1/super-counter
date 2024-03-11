@@ -13,7 +13,7 @@ const Tablo = ( {value, className}: TabloType) => {
 
     return (
         <div style={ tablo }>
-            <span className={className}>Ты на спринте: {value}</span>
+            <h1 className={className}>Ты на спринте: {value}</h1>
         </div>
     );
 };

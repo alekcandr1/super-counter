@@ -1,16 +1,14 @@
 import React from 'react';
-import dim from './dim.jpg'
+import dim from '../../dim.jpg'
 
-type DimychType = {
+type FinishType = {
     value: number
     max: number
 }
-const Dimych = ( {value, max}: DimychType) => {
+export const Finish = ( {value, max}: FinishType) => {
     return (
         <div className={ value < max ? 'dim' : 'dim dim-active'}>
             <img src={ dim } alt="" />
         </div>
     );
 };
-
-export default Dimych;
