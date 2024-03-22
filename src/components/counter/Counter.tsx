@@ -2,7 +2,6 @@ import * as React from 'react';
 import Tablo from './Tablo';
 import Button from '../Button';
 import s from './Counter.module.css';
-import { useState } from 'react';
 
 type CounterPropsType = {
     currentValue: number,
@@ -24,16 +23,13 @@ export const Counter = ( {
                              isActiveSettingMode,
                              error
                          }: CounterPropsType ) => {
-    const [status, setStatus] = useState(true)
 
     const incrementValue = () => {
         if (currentValue < maxValue) {
             setValue(currentValue + 1);
-            setStatus(false)
         }
     }
     const resetValue = () => {
-        setStatus(true)
         if (startValue > 0) {
             setValue(startValue);
         }
@@ -41,13 +37,20 @@ export const Counter = ( {
 
     return (
         <div className={ s.mainCounter }>
-            <Tablo currentValue={ currentValue } maxValue={ maxValue } errorText={ errorText }
-                   isActiveSettingMode={ isActiveSettingMode } error={ error } settingText={ settingText }
+            <Tablo currentValue={ currentValue }
+                   maxValue={ maxValue }
+                   errorText={ errorText }
+                   isActiveSettingMode={ isActiveSettingMode }
+                   error={ error } settingText={ settingText }
             />
             <div className={ 'buttons' }>
-                <Button onClickHandler={ incrementValue } title={ 'Следующий спринт' }
-                        disabled={ currentValue === maxValue } />
-                <Button onClickHandler={ resetValue } title={ 'Начать заново' } disabled={ status } />
+                <Button onClickHandler={ incrementValue }
+                        title={ 'Следующий спринт' }
+                        disabled={ currentValue === maxValue }
+                />
+                <Button onClickHandler={ resetValue }
+                        title={ 'Начать заново' }
+                        disabled={ currentValue === startValue } />
             </div>
         </div>
     );

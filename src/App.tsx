@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Logo } from './components/Logo';
 import { Finish } from './components/finish/Finish';
@@ -6,13 +6,20 @@ import { Counter } from './components/counter/Counter';
 import { Settings } from './components/settings/Settings';
 
 function App() {
-    const [maxValue, setMaxValue] = useState<number>(4)
-    const [startValue, setStartValue] = useState<number>(1)
-    const [currentValue, setCurrentValue] = useState<number>(startValue)
-    const [error, setError] = useState<boolean>(false)
-    const errorText = 'Введите корректное значение'
-    const settingText = 'Установите значения'
+    const [maxValue, setMaxValue] = useState(JSON.parse(localStorage.getItem('maxValue') || 4+ ''))
+    const [startValue, setStartValue] = useState(JSON.parse(localStorage.getItem('startValue') || 1+ ''))
+    const [currentValue, setCurrentValue] = useState(JSON.parse(localStorage.getItem('currentValue') || startValue+ ''))
+    const [error, setError] = useState(false)
+    const errorText = 'Недопустимое значение'
+    const settingText = 'Введите значения'
     const [isActiveSettingMode, setIsActiveSettingMode] = useState(false)
+
+    useEffect(()=>{
+        localStorage.setItem('startValue', JSON.stringify(startValue))
+        localStorage.setItem('currentValue', JSON.stringify(currentValue))
+        localStorage.setItem('maxValue', JSON.stringify(maxValue))
+    }, [currentValue,startValue,maxValue])
+
 
     return <div className="App">
         <Logo />
