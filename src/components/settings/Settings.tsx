@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import s from './Settings.module.css'
 import Button from '../Button';
@@ -8,32 +7,46 @@ import { Input } from '../Input';
 type SettingsPropsType = {
     setMaxValue: ( maxValue: number ) => void
     maxValue: number
-    value: number
-    setValue: ( value: number ) => void
     startValue: number
     setStartValue: ( value: number ) => void
-
+    setCurrentValue: ( value: number ) => void
+    setError: ( value: boolean ) => void
+    setIsActiveSettingMode: ( mode: boolean ) => void
+    isActiveSettingMode: boolean
+    error: boolean
 };
-export const Settings = ( props: SettingsPropsType ) => {
-    const [status, setStatus] = useState(true)
-    const [maxValue, setMaxValue] = useState<number>(props.maxValue)
-    const [value, setValue] = useState<number>(props.value)
+export const Settings = ( {
+                              setMaxValue,
+                              maxValue,
+                              startValue,
+                              setStartValue,
+                              setCurrentValue,
+                              setError,
+                              setIsActiveSettingMode,
+                              isActiveSettingMode,
+                              error,
+                          }: SettingsPropsType ) => {
+    const [maxValueSetting, setMaxValueSetting] = useState<number>(maxValue)
+    const [startValueSetting, setStartValueSetting] = useState<number>(startValue)
+
+    const maxCondition = maxValueSetting >= 2
+    const startCondition = startValueSetting < maxValueSetting && startValueSetting > 0
+
+    setError(!(maxCondition && startCondition))
+    setIsActiveSettingMode(maxValueSetting !== maxValue || startValueSetting !== startValue)
 
     const setSettings = () => {
-        props.setMaxValue(maxValue)
-        props.setValue(value)
-        props.setStartValue(value)
-        setStatus(true)
+        setMaxValue(maxValueSetting)
+        setStartValue(startValueSetting)
+        setCurrentValue(startValueSetting)
     }
 
     const onChangeHandlerMAX = ( newMaxValue: number ) => {
-        setMaxValue(newMaxValue);
-        setStatus(newMaxValue === props.maxValue);
+        setMaxValueSetting(newMaxValue)
     };
 
     const onChangeHandlerSTART = ( newStartValue: number ) => {
-        setValue(newStartValue)
-        setStatus(newStartValue === props.value)
+        setStartValueSetting(newStartValue)
     }
 
     return (
@@ -41,14 +54,17 @@ export const Settings = ( props: SettingsPropsType ) => {
             <div className={ s.fields }>
                 <div>
                     <span>Всего спринтов</span>
-                    <Input value={ maxValue } onBlur={ onChangeHandlerMAX } />
+                    <Input error={maxCondition} value={ maxValueSetting } onChange={ onChangeHandlerMAX } />
                 </div>
                 <div>
                     <span>Стартовый спринт</span>
-                    <Input value={ value } onBlur={ onChangeHandlerSTART } />
+                    <Input error={startCondition} value={ startValueSetting } onChange={ onChangeHandlerSTART } />
                 </div>
             </div>
-            <Button title={ 'СТАРТ' } onClickHandler={ setSettings } disabled={ status } />
+            <Button title={ 'ЛЕТИМ 🚀' }
+                    onClickHandler={ setSettings }
+                    disabled={ error || !isActiveSettingMode }
+            />
         </div>
     );
 };

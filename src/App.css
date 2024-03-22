@@ -10,7 +10,7 @@ body {
 }
 
 h1 {
-    font-size: 30px;
+    font-size: 27px;
     margin: 0;
 }
 
@@ -46,7 +46,11 @@ button:disabled {
 .tablo {
     font-size: 60px;
     margin-bottom: 20px;
+}
 
+.tabloMain {
+    display: flex;
+    justify-content: center;
 }
 
 .activeValue {
@@ -65,6 +69,8 @@ button:disabled {
     margin-top: 50px;
     transition: all 2s;
     opacity: 0;
+    text-align: center;
+    color: #ffffff;
 }
 
 .dim-active {
@@ -74,4 +80,22 @@ button:disabled {
 .dim > img {
     border-radius: 20px;
     height: 300px;
+}
+
+.error {
+    color: #d30000;
+    /*font-size: 20px;*/
+}
+
+.errorInput {
+    color: #d30000;
+    outline: 1px solid #d30000;
+    border:1px solid #d30000;
+}
+
+input {
+    color: #000;
+    outline: 1px solid #2f2f2f;
+    border:1px solid #2f2f2f;
+    border-radius: 2px;
 }

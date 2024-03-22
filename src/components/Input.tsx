@@ -4,16 +4,21 @@ import { ChangeEvent } from 'react';
 
 type InputProps = {
     value: number,
-    onBlur: ( value: number ) => void
+    onChange: ( value: number ) => void
+    error: boolean
 }
 
-export const Input = ( props: InputProps ) => {
+export const Input = ( {value, onChange, error}: InputProps ) => {
 
     const onChangeHandler = ( e: ChangeEvent<HTMLInputElement> ) => {
-        props.onBlur(+e.currentTarget.value)
+        onChange(+e.currentTarget.value)
     }
 
     return (
-        <input type="number" value={ props.value } onChange={ onChangeHandler } />
+        <input
+            className={error ? '' : 'errorInput'}
+            type="number"
+            value={ value }
+            onChange={ onChangeHandler } />
     );
 };

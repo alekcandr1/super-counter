@@ -8,6 +8,7 @@ type FinishType = {
 export const Finish = ( {value, max}: FinishType) => {
     return (
         <div className={ value < max ? 'dim' : 'dim dim-active'}>
+            <h3>Ты красавчик!</h3>
             <img src={ dim } alt="" />
         </div>
     );

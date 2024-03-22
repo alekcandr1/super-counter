@@ -1,19 +1,36 @@
 import React from 'react';
 
 type TabloType = {
-    value: number
-    className: string
-}
-const Tablo = ( {value, className}: TabloType) => {
+    currentValue: number
+    maxValue: number
+    error: boolean
+    errorText: string
+    isActiveSettingMode: boolean
+    settingText: string
 
-    const tablo = {
-        display: 'flex',
-        justifyContent: 'center'
+}
+const Tablo = ( {currentValue, maxValue, errorText, isActiveSettingMode, error, settingText}: TabloType ) => {
+
+    const contentForCorrectValue = (
+        <span className={ currentValue >= maxValue ? 'activeValue' : '' }>
+            Ты на спринте: { currentValue }
+        </span>
+    )
+    const contentForError = <span className={ 'error' }>{ errorText }</span>
+    const contentForSettingMode = <span>{ settingText }</span>
+
+
+    let contentTablo;
+
+    if (error) contentTablo = contentForError
+    else {
+        if (isActiveSettingMode) contentTablo = contentForSettingMode
+        else contentTablo = contentForCorrectValue
     }
 
     return (
-        <div style={ tablo }>
-            <h1 className={className}>Ты на спринте: {value}</h1>
+        <div className={ 'tabloMain' }>
+            <h1>{ contentTablo }</h1>
         </div>
     );
 };
