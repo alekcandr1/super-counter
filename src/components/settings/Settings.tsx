@@ -24,17 +24,16 @@ export const Settings = ( props: SettingsPropsType ) => {
         props.setValue(value)
         props.setStartValue(value)
         setStatus(true)
-
     }
 
-    const onChangeHandlerMAX = ( newValue: number ) => {
-        setMaxValue(newValue);
-        setStatus(newValue === props.maxValue);
+    const onChangeHandlerMAX = ( newMaxValue: number ) => {
+        setMaxValue(newMaxValue);
+        setStatus(newMaxValue === props.maxValue);
     };
 
-    const onChangeHandlerMIN = ( newValue: number ) => {
-        setValue(newValue)
-        setStatus(newValue === props.value)
+    const onChangeHandlerSTART = ( newStartValue: number ) => {
+        setValue(newStartValue)
+        setStatus(newStartValue === props.value)
     }
 
     return (
@@ -45,8 +44,8 @@ export const Settings = ( props: SettingsPropsType ) => {
                     <Input value={ maxValue } onBlur={ onChangeHandlerMAX } />
                 </div>
                 <div>
-                    <span>Текущий спринт</span>
-                    <Input value={ value } onBlur={ onChangeHandlerMIN } />
+                    <span>Стартовый спринт</span>
+                    <Input value={ value } onBlur={ onChangeHandlerSTART } />
                 </div>
             </div>
             <Button title={ 'СТАРТ' } onClickHandler={ setSettings } disabled={ status } />

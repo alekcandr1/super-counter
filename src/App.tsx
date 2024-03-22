@@ -7,8 +7,9 @@ import { Settings } from './components/settings/Settings';
 
 function App() {
     const [maxValue, setMaxValue] = useState<number>(6)
-    const [value, setValue] = useState<number>(1)
-    const [startValue, setStartValue] = useState<number>(value)
+    const [startValue, setStartValue] = useState<number>(1)
+    const [value, setValue] = useState<number>(startValue)
+
 
     return <div className="App">
         <Logo />
