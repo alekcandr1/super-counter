@@ -29,6 +29,7 @@ export const Settings = ( {
                           }: SettingsPropsType ) => {
 
     const [maxValueSetting, setMaxValueSetting] = useState(JSON.parse(localStorage.getItem('maxValueSetting') || maxValue + ''))
+
     const [startValueSetting, setStartValueSetting] = useState(JSON.parse(localStorage.getItem('startValueSetting') || startValue + ''))
 
     useEffect(() => {
