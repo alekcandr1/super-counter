@@ -1,32 +1,38 @@
 import * as React from 'react';
 import s from './Settings.module.css'
 import Button from '../Button';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Input } from '../Input';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppRootStoreType } from '../../redux/store';
+import { setCurrentValueAC, setErrorAC, setMaxValueAC, setStartValueAC, StateType } from '../../redux/counter-reducer';
 
 type SettingsPropsType = {
-    setMaxValue: ( maxValue: number ) => void
-    maxValue: number
-    startValue: number
-    setStartValue: ( value: number ) => void
-    setCurrentValue: ( value: number ) => void
-    setError: ( value: boolean ) => void
-    setIsActiveSettingMode: ( mode: boolean ) => void
     isActiveSettingMode: boolean
-    error: boolean
+    setIsActiveSettingMode: ( mode: boolean ) => void
 };
 
 export const Settings = ( {
-                              setMaxValue,
-                              maxValue,
-                              startValue,
-                              setStartValue,
-                              setCurrentValue,
-                              setError,
-                              setIsActiveSettingMode,
                               isActiveSettingMode,
-                              error,
+                              setIsActiveSettingMode,
                           }: SettingsPropsType ) => {
+    const counter = useSelector<AppRootStoreType, StateType>(state => state.counter)
+    const dispatch = useDispatch()
+    const {maxValue, startValue, error} = counter
+
+
+    const setMaxValue = useCallback((maxValue: number) => {
+        dispatch(setMaxValueAC(maxValue))
+    }, [dispatch])
+    const setCurrentValue = useCallback((currentValue: number) => {
+        dispatch(setCurrentValueAC(currentValue))
+    }, [dispatch])
+    const setStartValue = useCallback((startValue: number) => {
+        dispatch(setStartValueAC(startValue))
+    }, [dispatch])
+    const setError = useCallback((error: boolean) => {
+        dispatch(setErrorAC(error))
+    }, [dispatch])
 
     const [maxValueSetting, setMaxValueSetting] = useState(maxValue)
     const [startValueSetting, setStartValueSetting] = useState(startValue)
@@ -34,7 +40,7 @@ export const Settings = ( {
     const maxCondition = maxValueSetting >= 2
     const startCondition = (startValue < maxValueSetting) && (startValue > 0)
 
-    const checkConditions = (maxValueForChecking: number, startValueForChecking: number) => {
+    const checkConditions = ( maxValueForChecking: number, startValueForChecking: number ) => {
         const maxCondition = maxValueForChecking >= 2
         const startCondition = (startValueForChecking < maxValueForChecking) && (startValueForChecking > 0)
         setError(!(maxCondition && startCondition))
@@ -57,7 +63,6 @@ export const Settings = ( {
         setStartValueSetting(newStartValue)
         setIsActiveSettingMode(maxValueSetting !== maxValue || newStartValue !== startValue)
         checkConditions(maxValueSetting, newStartValue)
-
     }
 
     return (

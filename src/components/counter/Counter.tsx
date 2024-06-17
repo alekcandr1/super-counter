@@ -2,36 +2,35 @@ import * as React from 'react';
 import Tablo from './Tablo';
 import Button from '../Button';
 import s from './Counter.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppRootStoreType } from '../../redux/store';
+import { setCurrentValueAC, StateType } from '../../redux/counter-reducer';
+import { useCallback } from 'react';
 
 type CounterPropsType = {
-    currentValue: number,
-    maxValue: number
-    setValue: ( value: number ) => void
-    startValue: number
-    errorText: string
-    settingText: string
-    error: boolean
     isActiveSettingMode: boolean
 };
 export const Counter = ( {
-                             currentValue,
-                             maxValue,
-                             setValue,
-                             startValue,
-                             settingText,
-                             errorText,
                              isActiveSettingMode,
-                             error
                          }: CounterPropsType ) => {
+
+    const counter = useSelector<AppRootStoreType, StateType>(state => state.counter)
+    const {maxValue, startValue, currentValue, settingText, errorText, error} = counter
+
+    const dispatch = useDispatch()
+
+    const setCurrentValue = useCallback((currentValue: number) => {
+        dispatch(setCurrentValueAC(currentValue))
+    }, [dispatch])
 
     const incrementValue = () => {
         if (currentValue < maxValue) {
-            setValue(currentValue + 1);
+            setCurrentValue(currentValue + 1);
         }
     }
     const resetValue = () => {
         if (startValue > 0) {
-            setValue(startValue);
+            setCurrentValue(startValue);
         }
     }
 

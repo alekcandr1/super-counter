@@ -6,14 +6,14 @@ export type StateType = {
     errorText: string,
     settingText: string
 }
-// const initialState: StateType = {
-//     maxValue: 4,
-//     startValue: 1,
-//     currentValue: 1,
-//     error: false,
-//     errorText: 'Недопустимое значение',
-//     settingText: 'Введите значения'
-// }
+const initialState: StateType = {
+    maxValue: 5,
+    startValue: 1,
+    currentValue: 1,
+    error: false,
+    errorText: 'Недопустимое значение',
+    settingText: 'Введите значения'
+}
 
 type SetMaxValue = ReturnType<typeof setMaxValueAC>
 type SetCurrenValue = ReturnType<typeof setCurrentValueAC>
@@ -26,7 +26,7 @@ export type ActionsType =
     | SetStartValue
     | SetError
 
-export const CounterReducer = ( state: StateType, action: ActionsType ): StateType => {
+export const CounterReducer = ( state: StateType = initialState, action: ActionsType ): StateType => {
     switch (action.type) {
         case 'SET-MAX-VALUE':
             return {...state, maxValue: action.maxValue}
