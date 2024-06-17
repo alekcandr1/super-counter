@@ -9,8 +9,10 @@ function App() {
     const [maxValue, setMaxValue] = useState(JSON.parse(localStorage.getItem('maxValue') || 4+ ''))
     const [startValue, setStartValue] = useState(JSON.parse(localStorage.getItem('startValue') || 1+ ''))
     const [currentValue, setCurrentValue] = useState(JSON.parse(localStorage.getItem('currentValue') || startValue+ ''))
+
     const [error, setError] = useState(false)
     const errorText = 'Недопустимое значение'
+
     const settingText = 'Введите значения'
     const [isActiveSettingMode, setIsActiveSettingMode] = useState(false)
 

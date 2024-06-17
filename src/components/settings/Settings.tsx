@@ -1,7 +1,7 @@
 import * as React from 'react';
 import s from './Settings.module.css'
 import Button from '../Button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Input } from '../Input';
 
 type SettingsPropsType = {
@@ -28,33 +28,36 @@ export const Settings = ( {
                               error,
                           }: SettingsPropsType ) => {
 
-    const [maxValueSetting, setMaxValueSetting] = useState(JSON.parse(localStorage.getItem('maxValueSetting') || maxValue + ''))
-
-    const [startValueSetting, setStartValueSetting] = useState(JSON.parse(localStorage.getItem('startValueSetting') || startValue + ''))
-
-    useEffect(() => {
-        localStorage.setItem('maxValueSetting', JSON.stringify(maxValueSetting))
-        localStorage.setItem('startValueSetting', JSON.stringify(startValueSetting))
-    }, [maxValueSetting, startValueSetting])
+    const [maxValueSetting, setMaxValueSetting] = useState(maxValue)
+    const [startValueSetting, setStartValueSetting] = useState(startValue)
 
     const maxCondition = maxValueSetting >= 2
-    const startCondition = startValueSetting < maxValueSetting && startValueSetting > 0
+    const startCondition = (startValue < maxValueSetting) && (startValue > 0)
 
-    setError(!(maxCondition && startCondition))
-    setIsActiveSettingMode(maxValueSetting !== maxValue || startValueSetting !== startValue)
+    const checkConditions = (maxValueForChecking: number, startValueForChecking: number) => {
+        const maxCondition = maxValueForChecking >= 2
+        const startCondition = (startValueForChecking < maxValueForChecking) && (startValueForChecking > 0)
+        setError(!(maxCondition && startCondition))
+    }
 
     const setSettings = () => {
         setMaxValue(maxValueSetting)
         setStartValue(startValueSetting)
         setCurrentValue(startValueSetting)
+        setIsActiveSettingMode(false)
     }
 
     const onChangeHandlerMAX = ( newMaxValue: number ) => {
+        setIsActiveSettingMode(newMaxValue !== maxValue || startValueSetting !== startValue)
         setMaxValueSetting(newMaxValue)
+        checkConditions(newMaxValue, startValueSetting)
     };
 
     const onChangeHandlerSTART = ( newStartValue: number ) => {
         setStartValueSetting(newStartValue)
+        setIsActiveSettingMode(maxValueSetting !== maxValue || newStartValue !== startValue)
+        checkConditions(maxValueSetting, newStartValue)
+
     }
 
     return (
