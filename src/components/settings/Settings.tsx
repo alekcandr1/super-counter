@@ -5,7 +5,13 @@ import { useCallback, useState } from 'react';
 import { Input } from '../Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStoreType } from '../../redux/store';
-import { setCurrentValueAC, setErrorAC, setMaxValueAC, setStartValueAC, StateType } from '../../redux/counter-reducer';
+import {
+    setCurrentValueAC,
+    setErrorAC,
+    setMaxValueAC,
+    setStartValueAC,
+    StateType
+} from '../../redux/counter-reducer';
 
 type SettingsPropsType = {
     isActiveSettingMode: boolean
